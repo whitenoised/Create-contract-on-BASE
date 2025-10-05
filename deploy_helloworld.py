@@ -2,14 +2,13 @@ import json
 import solcx
 from web3 import Web3
 import time
-from params import PRIVATE_KEY  # Импортируем закрытый ключ из params.py
+import os
 
 # 1. Настройки
-rpc_url = ("https://base-mainnet.infura.io/v3/"
-           "YOUR_API_KEY")  # Замените на ваш Infura API ключ
+rpc_url = f"https://base-mainnet.infura.io/v3/{os.getenv('INFURA_API_KEY')}"
 chain_id = 8453  # Chain ID для Base Mainnet
 w3 = Web3(Web3.HTTPProvider(rpc_url))
-account = w3.eth.account.from_key(PRIVATE_KEY)
+account = w3.eth.account.from_key(os.getenv("PRIVATE_KEY"))
 address = account.address
 
 # 2. Проверка подключения
