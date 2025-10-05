@@ -1,8 +1,13 @@
-name: CI для Python и Solidity
-on: [push, pull_request]
+name: Деплой в Base Mainnet
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Установка Python
@@ -10,10 +15,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Установка зависимостей
-        run: pip install web3 py-solc-x pytest
-      - name: Проверка Python (линтинг)
-        run: pip install flake8 && flake8 deploy_helloworld.py
-      - name: Компиляция Solidity
-        run: python -c "import solcx; solcx.install_solc('0.8.20'); solcx.compile_source(open('HelloWorld.sol').read())"
-      - name: Запуск тестов Python
-        run: pytest  # Добавьте тесты для deploy_helloworld.py
+        run: pip install web3 py-solc-x
+      - name: Установка Solidity
+        run: python -c "import solcx; solcx.install_solc('0.8.20')"
+      - name: Деплой контракта
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
+        run: python deploy_helloworld.py
