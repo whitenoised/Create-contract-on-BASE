@@ -1,0 +1,19 @@
+name: CI для Python и Solidity
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Установка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Установка зависимостей
+        run: pip install web3 py-solc-x pytest
+      - name: Проверка Python (линтинг)
+        run: pip install flake8 && flake8 deploy_helloworld.py
+      - name: Компиляция Solidity
+        run: python -c "import solcx; solcx.install_solc('0.8.20'); solcx.compile_source(open('HelloWorld.sol').read())"
+      - name: Запуск тестов Python
+        run: pytest  # Добавьте тесты для deploy_helloworld.py
