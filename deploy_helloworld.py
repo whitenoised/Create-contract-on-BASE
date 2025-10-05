@@ -2,13 +2,14 @@ import json
 import solcx
 from web3 import Web3
 import time
-import os
+from params import PRIVATE_KEY  # Импортируем закрытый ключ из params.py
 
 # 1. Настройки
-rpc_url = f"https://base-mainnet.infura.io/v3/{os.getenv('INFURA_API_KEY')}"
+rpc_url = ("https://base-mainnet.infura.io/v3/"
+           "YOUR_API_KEY")  # Замените на ваш Infura API ключ
 chain_id = 8453  # Chain ID для Base Mainnet
 w3 = Web3(Web3.HTTPProvider(rpc_url))
-account = w3.eth.account.from_key(os.getenv("PRIVATE_KEY"))
+account = w3.eth.account.from_key(PRIVATE_KEY)
 address = account.address
 
 # 2. Проверка подключения
@@ -27,8 +28,8 @@ if balance < gas_cost_eth:
     print("Ошибка: недостаточно средств для деплоя")
     exit()
 if gas_cost_eth > 0.00001:
-    print("Предупреждение: стоимость газа > 0.00001 ETH. "
-          "Попробуйте позже.")
+    print("Предупреждение: стоимость газа превышает 0.00001 ETH. "
+          "Попробуйте позже или проверьте gasPrice.")
 else:
     print("Стоимость газа < 0.00001 ETH — оптимально!")
 
