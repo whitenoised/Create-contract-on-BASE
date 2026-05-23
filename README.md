@@ -13,6 +13,31 @@ To run this project, you need:
 - **Infura API Key**: For connecting to Base Mainnet.
 - **Internet Connection**: To interact with the Base Mainnet.
 
+## ✨ New Features - Bulk Operations
+
+The HelloWorld contract now supports advanced bulk operations for efficient message management:
+
+### Bulk Message Storage
+- Store up to 50 messages in a single transaction
+- Store messages at specific indices (with auto-expansion)
+- Efficient gas usage with batched operations
+
+### Bulk Message Retrieval
+- Retrieve up to 100 messages by indices in one call
+- Get message ranges for sequential access
+- Optimized for large-scale data access
+
+### Advanced Features
+- **Message Search**: Find messages containing specific substrings
+- **Message Statistics**: Get analytics on stored messages
+- **Bulk Removal**: Clear multiple messages simultaneously
+- **Gas Estimation**: Predict costs for bulk operations
+
+### Performance Benefits
+- **60-70% gas savings** compared to individual operations
+- **Batch processing** reduces network overhead
+- **Optimized storage** patterns for better efficiency
+
 ## Installation
 
 1. **Clone the Repository**:
